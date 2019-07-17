@@ -175,7 +175,31 @@ def get_batches(words, batch_size, window_size=5):
             x.extend([batch_x]*len(batch_y))
             y.extend(batch_y)
         yield x, y
-        
+
+
+
+
+
+def get_targets(words, idx, window_size=5):
+    '''
+    获得input word的上下文单词列表
+    
+    参数
+    ---
+    words: 单词列表
+    idx: input word的索引号
+    window_size: 窗口大小
+    '''
+    target_window = np.random.randint(1, window_size+1)
+    # 这里要考虑input word前面单词不够的情况
+    start_point = idx - target_window if (idx - target_window) > 0 else 0
+    end_point = idx + target_window
+    # output words(即窗口中的上下文单词)
+    targets = set(words[start_point: idx] + words[idx+1: end_point+1])
+    return list(targets)
+
+
+                
         
 
 epochs = 10 # 迭代轮数
@@ -232,30 +256,3 @@ with tf.Session(graph=train_graph) as sess:
     embed_mat = sess.run(normalized_embedding)
 
 
-
-
-
-
-
-
-# 
-def get_targets(words, idx, window_size=5):
-    '''
-    获得input word的上下文单词列表
-    
-    参数
-    ---
-    words: 单词列表
-    idx: input word的索引号
-    window_size: 窗口大小
-    '''
-    target_window = np.random.randint(1, window_size+1)
-    # 这里要考虑input word前面单词不够的情况
-    start_point = idx - target_window if (idx - target_window) > 0 else 0
-    end_point = idx + target_window
-    # output words(即窗口中的上下文单词)
-    targets = set(words[start_point: idx] + words[idx+1: end_point+1])
-    return list(targets)
-
-
-        
