@@ -242,7 +242,7 @@ with tf.Session(graph=train_graph) as sess:
                 sim = similarity.eval()
                 for i in range(valid_size):
                     valid_word = int_to_vocab[valid_examples[i]]
-                    top_k = 8 # 取最相似单词的前8个
+                    top_k = 1 # 取最相似单词的前8个
                     nearest = (-sim[i, :]).argsort()[1:top_k+1]
                     log = 'Nearest to [%s]:' % valid_word
                     for k in range(top_k):
