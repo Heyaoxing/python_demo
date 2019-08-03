@@ -86,11 +86,25 @@ while days>-10:
 # In[32]:
 
 
-get_stock_data('600848','2018-02-27')
+def get_all(day):
+    codes=ts.get_stock_basics().index.tolist() 
+    for code in codes:
+        print('process code '+code)
 
 
 # In[ ]:
 
 
+def get_stock_provcess(code,day):
+    index=0
+    while index>-day:
+        index=index-1
+        date=datetime.timedelta(days=index)+datetime.datetime.now()
+        date_str=date.strftime('%Y-%m-%d')
+        print(date_str)
+        get_stock_data(code,date_str)
+        
+ # processed 002966,688002,688009,300127,603327,603613,300748,603233,603687,300526,603279,002881,600371,300223,002129,300786,002957,002201,300119,603882,000687,000831,603256,600980,000590,600366,688010,688003,300224,688028,600111,300174,000713,000795,002057,600259,600206,600483,688020,000970,688033,603258,002056,300328,000758,002378,600313,002876,300777,603712,600195,002041,300378,688005,688011,600392,600354,300779,002842
 
 
+ get_all(day)
